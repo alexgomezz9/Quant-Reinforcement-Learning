@@ -22,7 +22,7 @@ This TFM studies whether Reinforcement Learning (RL) can learn dynamic portfolio
 2. Evaluate RL policies under strict out-of-sample testing with walk-forward validation.
 3. Incorporate explicit tail-risk control using CVaR at alpha = 0.05 and 0.01.
 4. Compare RL agents (PPO and SAC) to classical benchmarks (Equal-Weight, Static, Markowitz/Risk-Parity if time).
-5. Analyze robustness under regime shifts and sensitivity to transaction costs.
+5. Analyze robustness under regime shifts(2008 crisis. covid etc) and sensitivity to transaction costs.
 
 ---
 
