@@ -1,0 +1,1 @@
+"""Classical benchmark allocation strategies."""
