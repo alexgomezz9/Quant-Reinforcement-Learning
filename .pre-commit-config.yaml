@@ -1,0 +1,28 @@
+# Pre-commit hooks — run automatically before every git commit.
+# Install once with: pre-commit install
+# Manual run:        pre-commit run --all-files
+
+repos:
+  # General file hygiene
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.6.0
+    hooks:
+      - id: trailing-whitespace      # remove trailing spaces
+      - id: end-of-file-fixer        # ensure files end with newline
+      - id: check-yaml               # validate YAML syntax
+      - id: check-toml               # validate TOML syntax
+      - id: check-added-large-files  # prevent committing big files
+        args: ['--maxkb=500']
+
+  # Code formatter (automatic — rewrites files)
+  - repo: https://github.com/psf/black
+    rev: 24.4.2
+    hooks:
+      - id: black
+
+  # Linter (flags problems, auto-fixes some)
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.4.4
+    hooks:
+      - id: ruff
+        args: [--fix]

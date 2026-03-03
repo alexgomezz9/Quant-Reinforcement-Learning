@@ -1,0 +1,78 @@
+# ═══════════════════════════════════════════════════════════════════════
+# default.yaml — Central configuration for portfolio-rl
+# All scripts read parameters from here. Override per-experiment if needed.
+# ═══════════════════════════════════════════════════════════════════════
+
+# ── Asset Universe ──────────────────────────────────────────────────
+universe:
+  tickers:
+    - SPY   # US large-cap equity (S&P 500)
+    - EFA   # International developed equity
+    - TLT   # US long-term bonds (20+ yr Treasury)
+    - IEF   # US intermediate bonds (7-10 yr Treasury)
+    - GLD   # Gold
+    - VNQ   # US REITs (real estate)
+    - DBC   # Commodities (diversified)
+    - SHV   # Short-term Treasury / cash proxy
+
+# ── Data ────────────────────────────────────────────────────────────
+data:
+  start_date: "2005-01-01"
+  end_date: "2025-12-31"
+  price_field: "Adj Close"       # adjusted for splits & dividends
+  frequency: "1d"                # daily
+  raw_dir: "data/raw"
+  processed_dir: "data/processed"
+
+# ── Features (for RL state, built later) ────────────────────────────
+features:
+  lookback_window: 60            # W — days of history in observation
+  log_returns: true
+  rolling_vol_window: 20         # days for rolling volatility
+  rolling_sharpe_window: 20      # days for rolling Sharpe proxy
+
+# ── Risk ────────────────────────────────────────────────────────────
+risk:
+  cvar_alpha: [0.05, 0.01]      # CVaR confidence levels
+  cvar_window: 60               # K — rolling window for empirical CVaR
+  # NOTE: alpha=0.01 with K=60 uses only ~0.6 tail observations.
+  # For alpha=0.01, sensitivity analysis should use K>=120.
+
+# ── Transaction Costs ───────────────────────────────────────────────
+costs:
+  baseline_bps: 5               # basis points per unit of turnover
+  sensitivity_bps: 10           # for sensitivity analysis
+
+# ── Benchmarks ──────────────────────────────────────────────────────
+benchmarks:
+  rebalance_frequency: "monthly" # BM = beginning of month
+  static_weights:                # manual fixed allocation (example)
+    SPY: 0.25
+    EFA: 0.05
+    TLT: 0.15
+    IEF: 0.15
+    GLD: 0.10
+    VNQ: 0.05
+    DBC: 0.05
+    SHV: 0.20
+
+# ── Walk-Forward Validation ─────────────────────────────────────────
+walk_forward:
+  train_years: 5
+  test_years: 1
+  slide_years: 1                # how far to advance each fold
+
+# ── RL (placeholder — configured when we reach PR5+) ───────────────
+rl:
+  reward: "net_return_minus_cvar"  # reward_t = r_t - lambda * CVaR_hat
+  cvar_lambda: 0.5                 # penalty weight (tunable)
+  algorithms: ["PPO", "SAC"]
+  seed: 42
+
+# ── MLflow ──────────────────────────────────────────────────────────
+mlflow:
+  tracking_uri: "mlruns"
+  experiment_name: "portfolio-rl"
+
+# ── Reproducibility ─────────────────────────────────────────────────
+seed: 42

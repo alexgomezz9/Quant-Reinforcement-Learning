@@ -1,0 +1,38 @@
+# ── Python ───────────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+*.egg
+
+# ── Virtual environment ─────────────────────────────────────────────
+.venv/
+venv/
+
+# ── Data (too large for git — downloaded via scripts) ───────────────
+data/raw/
+data/processed/
+
+# ── Outputs (regenerable via scripts) ───────────────────────────────
+outputs/figures/
+outputs/reports/
+
+# ── MLflow tracking ─────────────────────────────────────────────────
+mlruns/
+mlartifacts/
+
+# ── IDE / OS ────────────────────────────────────────────────────────
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# ── Jupyter (if used later) ─────────────────────────────────────────
+.ipynb_checkpoints/
+
+# ── Misc ────────────────────────────────────────────────────────────
+*.log
+.env
